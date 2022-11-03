@@ -67,10 +67,10 @@ function DolgubonSetCrafterWindowComboboxes:adduiElement(newElement, position)
 	else
 		table.insert(self.elements,  newElement)
 	end
-	
+
 
 	-- Finally, set the anchors for all the elements
-	
+
 --(CENTER,  DolgubonSetCrafterWindowComboboxes,CENTER, x,y)
 end
 
@@ -136,7 +136,8 @@ local function tooltipForCombobox(comboBoxContainer)
 		if control.menuIndex == 1 then -- unselected option
 			return
 		end
-		local info =currentParent:GetChild(1).m_comboBox.m_sortedItems[control.menuIndex].info[1]
+		local info =currentParent:GetChild(2).m_comboBox.m_sortedItems[control.menuIndex].info[1]
+
 		if info then
 			showPreviewItemLink(control,currentParent, info)
 		end
@@ -167,10 +168,10 @@ end
 local function makeDropdownSelections(comboBoxContainer, tableInfo , text , x, y, comboBoxLocation, selectionTypes, noDefault)
 	-- comboBoxLocation=2
 	if selectionTypes == "armourTrait" then isArmourCombobox = true elseif selectionTypes == "weaponTrait" then isArmourCombobox = false end
-	local comboBox = comboBoxContainer:GetChild(comboBoxLocation)
+	local comboBox = comboBoxContainer:GetChild(2)
 
 	comboBoxContainer:GetNamedChild("Name"):SetText(text..":")
-	if not comboBox.m_comboBox then 
+	if not comboBox.m_comboBox then
 		comboBox.m_comboBox =comboBox.dropdown
 		comboBox.dropdown.m_container:SetDimensions(225,30)
 		comboBox.dropdown.m_dropdown:SetDimensions(225,370)
@@ -181,7 +182,7 @@ local function makeDropdownSelections(comboBoxContainer, tableInfo , text , x, y
 	else
 	end
 
-	
+
 	--Function called when an option is selected
 	function comboBox:setSelected( selectedInfo)
 		if selectedInfo[1] ~= -1 then
@@ -195,28 +196,28 @@ local function makeDropdownSelections(comboBoxContainer, tableInfo , text , x, y
 		comboBoxContainer.selected = selectedInfo
 
 		comboBoxContainer.invalidSelection = function(weight, isAmour)
-			return selectedInfo[1]==-1 
+			return selectedInfo[1]==-1
 
 		end
 	end
 
 	-- We want to keep the original order of the stuff listed. However, the style and set boxes are sorted before anyway
-	comboBox.m_comboBox:SetSortsItems(false) 
+	comboBox.m_comboBox:SetSortsItems(false)
 	-- Set the default entry
 	if not noDefault then
-		comboBox.itemEntryDefault = ZO_ComboBox:CreateItemEntry(zo_strformat(langStrings.UIStrings.comboboxDefault,text), function() 
+		comboBox.itemEntryDefault = ZO_ComboBox:CreateItemEntry(zo_strformat(langStrings.UIStrings.comboboxDefault,text), function()
 			comboBox:setSelected( {-1,zo_strformat(langStrings.UIStrings.comboboxDefault ,text)})
 				end )
 		comboBox.m_comboBox:AddItem(comboBox.itemEntryDefault)
 		comboBoxContainer.selectPrompt = zo_strformat(langStrings.UIStrings.selectPrompt,text)
 		function comboBoxContainer:SelectFirstItem()
-			comboBox.m_comboBox:SelectItem(comboBox.itemEntryDefault) 
+			comboBox.m_comboBox:SelectItem(comboBox.itemEntryDefault)
 		end
 		comboBoxContainer:SelectFirstItem()
 	end
 
 	-- Select the first/default item
-	
+
 	comboBoxContainer.idSelectors = {}
 	for i, value in pairs(tableInfo) do
 		local itemEntry = ZO_ComboBox:CreateItemEntry(zo_strformat("<<t:1>>",tableInfo[i][2]), function() comboBox:setSelected( tableInfo[i])end )
@@ -240,7 +241,7 @@ local function makeDropdownSelections(comboBoxContainer, tableInfo , text , x, y
 			if noDefault then
 				comboBox.itemEntryDefault = itemEntry
 				function comboBoxContainer:SelectFirstItem()
-					comboBox.m_comboBox:SelectItem(comboBox.itemEntryDefault) 
+					comboBox.m_comboBox:SelectItem(comboBox.itemEntryDefault)
 				end
 			end
 			if (noDefault and  DolgubonSetCrafter.savedvars[selectionTypes]==nil) then
@@ -312,23 +313,23 @@ function DolgubonSetCrafter.setupComboBoxes()
 	Dolgubons_Set_Crafter_Quality.previewDataPosition = function(params, newValue) params[7] = newValue end
 	Dolgubons_Set_Crafter_ArmourEnchant.previewDataPosition = function(params, newValue, isCP, level)
 		local potencyId, essenceId, aspectId = LibLazyCrafting.EnchantAttributesToGlyphIds(isCP, level,newValue , DolgubonSetCrafter.ComboBox.EnchantQuality.selected[1])
-		params[9] = potencyId 
-		params[10] = essenceId 
-		params[11] = aspectId 
+		params[9] = potencyId
+		params[10] = essenceId
+		params[11] = aspectId
 		params[2] = DolgubonSetCrafter.ComboBox.Armour.selected[1]
 		params[3] = 8
 	end
 	Dolgubons_Set_Crafter_WeaponEnchant.showPreview = true
 	Dolgubons_Set_Crafter_WeaponEnchant.previewDataPosition = function(params, newValue, isCP, level)
 		local potencyId, essenceId, aspectId = LibLazyCrafting.EnchantAttributesToGlyphIds(isCP, level,newValue , DolgubonSetCrafter.ComboBox.EnchantQuality.selected[1])
-		params[9] = potencyId 
-		params[10] = essenceId 
-		params[11] = aspectId 
+		params[9] = potencyId
+		params[10] = essenceId
+		params[11] = aspectId
 	end
 	Dolgubons_Set_Crafter_JewelEnchant.showPreview = true
 	Dolgubons_Set_Crafter_JewelEnchant.previewDataPosition = function(params, newValue, isCP, level)
 		local potencyId, essenceId, aspectId = LibLazyCrafting.EnchantAttributesToGlyphIds(isCP, level,newValue , DolgubonSetCrafter.ComboBox.EnchantQuality.selected[1])
-		params[9] = potencyId 
+		params[9] = potencyId
 		params[10] = essenceId
 		params[11] = aspectId
 		params[2] = DolgubonSetCrafter.ComboBox.Jewelry.selected[1]
@@ -336,12 +337,12 @@ function DolgubonSetCrafter.setupComboBoxes()
 	end
 	Dolgubons_Set_Crafter_EnchantQuality.previewDataPosition = function(params, newValue, isCP, level)
 		local potencyId, essenceId, aspectId = LibLazyCrafting.EnchantAttributesToGlyphIds(isCP, level,DolgubonSetCrafter.ComboBox.WeaponEnchant.selected[1] , newValue)
-		params[9] = potencyId 
-		params[10] = essenceId 
-		params[11] = aspectId 
+		params[9] = potencyId
+		params[10] = essenceId
+		params[11] = aspectId
 	end
-	
-	
+
+
 	for k, v in pairs(DolgubonSetCrafter.ComboBox) do
 		v.name = k
 	end
@@ -368,8 +369,8 @@ function DolgubonSetCrafter.setupComboBoxes()
 	DolgubonSetCrafter.ComboBox.EnchantQuality.isGlyphQuality = true
 	--DolgubonSetCrafterWindowComboboxes:anchoruiElements()
 	local originalScrollEnter = ZO_ScrollableComboBox_Entry_OnMouseEnter
-	ZO_ScrollableComboBox_Entry_OnMouseEnter = 
-	function(...) 
+	ZO_ScrollableComboBox_Entry_OnMouseEnter =
+	function(...)
 		originalScrollEnter(...)
 		local params = {...}
 		local self = params[1]
@@ -379,7 +380,7 @@ function DolgubonSetCrafter.setupComboBoxes()
 		end
 	end
 	local originalScrollExit = ZO_ScrollableComboBox_Entry_OnMouseExit
-	ZO_ScrollableComboBox_Entry_OnMouseExit = 
+	ZO_ScrollableComboBox_Entry_OnMouseExit =
 	function(...)
 		originalScrollExit(...)
 		local params = {...}

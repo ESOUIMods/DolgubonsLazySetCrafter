@@ -1,7 +1,7 @@
 -- Dolgubon's Lazy Set Crafter
 -- Created December 2016
 -- Last Modified: December 23 2016
--- 
+--
 -- Created by Dolgubon (Joseph Heinzle)
 -----------------------------------
 --
@@ -14,7 +14,7 @@ end
 
 local originalD = d
 local function d(...)
-	if GetDisplayName()=="@Dolgubon" then 
+	if GetDisplayName()=="@Dolgubon" then
 		originalD(...)
 	end
 end
@@ -26,16 +26,16 @@ local craftedItems = {}
 local function removeFromScroll()
 end
 
-local function getItemLinkFromItemId(itemId) 
-	return string.format("|H0:item:%d:%d:50:0:0:0:0:0:0:0:0:0:0:0:0:%d:%d:0:0:%d:0|h|h", itemId, 0, ITEMSTYLE_NONE, 0, 10000) 
+local function getItemLinkFromItemId(itemId)
+	return string.format("|H0:item:%d:%d:50:0:0:0:0:0:0:0:0:0:0:0:0:%d:%d:0:0:%d:0|h|h", itemId, 0, ITEMSTYLE_NONE, 0, 10000)
 end
 
 local LazyCrafter
 
-local LibLazyCrafting = LibStub:GetLibrary("LibLazyCrafting")
+local LibLazyCrafting = LibLazyCrafting
 local out = DolgubonSetCrafter.out
 
-local validityFunctions 
+local validityFunctions
 
 local shortVersions =
 {
@@ -121,22 +121,22 @@ end
 function getNumTraitsKnown(station, pattern, trait) -- and if the trait is known
 	local count = 0
 	local traitKnown =false
-	for i =1 ,9 do 
+	for i =1 ,9 do
 		if station == CRAFTING_TYPE_CLOTHIER then
 			if pattern > 1 then pattern = pattern - 1 end
 		end
 		local traitIndex,_,known = GetSmithingResearchLineTraitInfo(station, pattern, i)
-		
+
 		if known then
 			count = count + 1
 		end
-		
+
 		if traitIndex == trait then
 			traitKnown = known
-			
+
 		end
 	end
-	
+
 	return count, traitKnown
 end
 
@@ -182,7 +182,7 @@ local validityFunctions = --stuff that's not here will automatically recieve a v
 
 
 -- uses the info in validityFunctions to recheck and see if attributes are an impediment to crafting.
-local function applyValidityFunctions(requestTable) 
+local function applyValidityFunctions(requestTable)
 	for attribute, t in pairs(validityFunctions) do
 		if requestTable["Station"] == 7 and attribute == "Style" then
 		else
@@ -239,7 +239,7 @@ local function getPatternIndex(patternButton,weight)
 		else
 			-- it is a staff
 			return patternButton.selectedIndex - 6, CRAFTING_TYPE_WOODWORKING
-			
+
 		end
 	else
 		-- It is armour
@@ -303,7 +303,7 @@ end
 function DolgubonSetCrafter.recompileMatRequirements()
 	clearTable(DolgubonSetCrafter.materialList)
 	for station, stationQueue in pairs( LazyCrafter.personalQueue) do
-		
+
 		for queuePosition, request in pairs(stationQueue) do
 			if (request.smithingQuantity == 0)  or not (station == CRAFTING_TYPE_ENCHANTING ) then
 				addRequirements(request, true)
@@ -354,10 +354,10 @@ local function addToQueue(requestTable, craftMultiplier )
 				level,
 				styleIndex,
 				trait,
-				DolgubonSetCrafter:GetMimicStoneUse(), 
-				station,  
-				setIndex, 
-				quality, 
+				DolgubonSetCrafter:GetMimicStoneUse(),
+				station,
+				setIndex,
+				quality,
 				DolgubonSetCrafter:GetAutocraft(),
 				requestTableCopy["Reference"],
 				nil,
@@ -371,8 +371,8 @@ local function addToQueue(requestTable, craftMultiplier )
 			local enchantRequestTable
 			if type(requestTable["Enchant"])=="table" and requestTable["Enchant"][1]~=0 then
 				local enchantLevel = LibLazyCrafting.closestGlyphLevel(isCP, level)
-				enchantRequestTable = LazyCrafter:CraftEnchantingGlyphByAttributes(isCP, enchantLevel, 
-					requestTable["Enchant"][1], requestTable["EnchantQuality"] , 
+				enchantRequestTable = LazyCrafter:CraftEnchantingGlyphByAttributes(isCP, enchantLevel,
+					requestTable["Enchant"][1], requestTable["EnchantQuality"] ,
 					DolgubonSetCrafter:GetAutocraft(), requestTableCopy["Reference"], returnedTable)
 
 				CraftRequestTable[12] = enchantRequestTable.potencyItemID
@@ -411,10 +411,10 @@ local function addPatternToQueue(patternButton,i)
 	end
 	local comboBoxes = DolgubonSetCrafter.ComboBox
 	local requestTable = {}
-	
+
 	local pattern, station  = 0, 0
 	local trait = 0
-	local isArmour 
+	local isArmour
 
 	-- Weight
 	if patternButton:HaveWeights() then
@@ -461,7 +461,7 @@ local function addPatternToQueue(patternButton,i)
 	end
 
 	local level, isCP = DolgubonSetCrafter:GetLevel()
-	
+
 	requestTable["Level"] = {level, level, isCP} -- doubled to simplify code in other areas
 
 	requestTable["Set"]			= shallowTwoItemCopy(comboBoxes.Set.selected)
@@ -472,11 +472,11 @@ local function addPatternToQueue(patternButton,i)
 
 	-- Check that all selections are valid, i.e. valid level and not 'select trait'
 	if not level then -- is a level entered?
-		requestTable["Level"][1]=nil 
-		out(DolgubonSetCrafterWindowInputInputBox.selectPrompt) 
+		requestTable["Level"][1]=nil
+		out(DolgubonSetCrafterWindowInputInputBox.selectPrompt)
 		return
 		-- Is the level valid?
-	elseif not LazyCrafter.isSmithingLevelValid(  isCP, requestTable["Level"][1] ) then 
+	elseif not LazyCrafter.isSmithingLevelValid(  isCP, requestTable["Level"][1] ) then
 		out(DolgubonSetCrafter.localizedStrings.UIStrings.invalidLevel)
 		return
 	end
@@ -609,14 +609,14 @@ local function addByItemLinkToQueue(itemLink)
 	end
 
 	local requestTable = {}
-	
+
 	local weight = GetItemLinkArmorType(itemLink)
 	if weight == 0 then
 		requestTable["Weight"] = {nil, ""}
 	else
 		requestTable["Weight"] = {weight, DolgubonSetCrafter.localizedStrings.armourTypes[4-weight]}
 	end
-	
+
 	if weight == ARMORTYPE_NONE then -- weapon OR shield
 		local weaponType = GetItemLinkWeaponType(itemLink)
 		local itemFilterType = GetItemLinkFilterTypeInfo(itemLink)
@@ -646,8 +646,8 @@ local function addByItemLinkToQueue(itemLink)
 
 	local traitIndex = GetItemLinkTraitInfo(itemLink)+1
 
-	requestTable["Trait"] = findMatchingSelected(DolgubonSetCrafter.jewelryTraits, traitIndex) or 
-		findMatchingSelected(DolgubonSetCrafter.armourTraits, traitIndex) or 
+	requestTable["Trait"] = findMatchingSelected(DolgubonSetCrafter.jewelryTraits, traitIndex) or
+		findMatchingSelected(DolgubonSetCrafter.armourTraits, traitIndex) or
 		findMatchingSelected(DolgubonSetCrafter.weaponTraits, traitIndex)
 
 	local _,_,_,_,_,setIndex = GetItemLinkSetInfo(itemLink)
@@ -709,9 +709,9 @@ function DolgubonSetCrafter.compileMatRequirements()
 	end
 end
 
-function DolgubonSetCrafter.craft() 
+function DolgubonSetCrafter.craft()
 
-	DolgubonSetCrafter.compileMatRequirements() 
+	DolgubonSetCrafter.compileMatRequirements()
 	DolgubonSetCrafter.updateList()
 end
 
@@ -725,7 +725,7 @@ function DolgubonSetCrafter.removeFromScroll(reference, removeFromLLC, resultTab
 
 	local requestTable = LazyCrafter:findItemByReference(reference)[1] or resultTable
 
-	if requestTable then 
+	if requestTable then
 		addRequirements(requestTable, false)
 	end
 
@@ -734,7 +734,7 @@ function DolgubonSetCrafter.removeFromScroll(reference, removeFromLLC, resultTab
 		removalFunction = reference.onClickety
 		reference = reference.Reference
 	end
-	
+
 
 	for k, v in pairs(queue) do
 		if v.Reference == reference then
@@ -755,13 +755,13 @@ function DolgubonSetCrafter.removeFromScroll(reference, removeFromLLC, resultTab
 
 	table.sort(queue, function(a,b) if a~=nil and b~=nil then return a["Reference"]>b["Reference"] else return b==nil end end)
 	DolgubonSetCrafter.updateList()
-	
+
 end
 
 local function LLCCraftCompleteHandler(event, station, resultTable)
-	if event ==LLC_CRAFT_SUCCESS then 
-		if resultTable.type == "improvement" then 
-			resultTable.station = GetRearchLineInfoFromRetraitItem(BAG_BACKPACK, resultTable.ItemSlotID) 
+	if event ==LLC_CRAFT_SUCCESS then
+		if resultTable.type == "improvement" then
+			resultTable.station = GetRearchLineInfoFromRetraitItem(BAG_BACKPACK, resultTable.ItemSlotID)
 		end
 		DolgubonSetCrafter.removeFromScroll(resultTable.reference,false, resultTable)
 	elseif event == LLC_INITIAL_CRAFT_SUCCESS or event == LLC_CRAFT_PARTIAL_IMPROVEMENT then
@@ -783,7 +783,7 @@ function DolgubonSetCrafter.initializeFunctions.initializeCrafting()
 
 	LazyCrafter = LibLazyCrafting:AddRequestingAddon(DolgubonSetCrafter.name, false, LLCCraftCompleteHandler)
 	DolgubonSetCrafter.LazyCrafter = LazyCrafter
-	for k, v in pairs(queue) do 
+	for k, v in pairs(queue) do
 		if not v.doNotKeep then
 
 			local returnedTable = LazyCrafter:CraftSmithingItemByLevel(unpack(v["CraftRequestTable"]))
@@ -840,7 +840,7 @@ end
 
 
 local function findIndexName(index, table)
-	for i = 1, #table do 
+	for i = 1, #table do
 		if table[i][1] == index then
 			return table[i][2]
 		end
@@ -890,9 +890,9 @@ local function AddForiegnSmithingRequest(pattern, isCP, level, styleIndex, trait
 		end
 		queueTable.Set 									= {setIndex, findIndexName(setIndex, DolgubonSetCrafter.setIndexes)}
 		queueTable.Quality 								= {quality, DolgubonSetCrafter.quality[quality][2]}
-		
+
 		--LLC_CraftSmithingItemByLevel(self, patternIndex, isCP , level, styleIndex, traitIndex, useUniversalStyleItem, stationOverride, setIndex, quality, autocraft)
-		
+
 		applyValidityFunctions(queueTable)
 		queue[#queue + 1] = queueTable
 	else
@@ -904,7 +904,7 @@ end
 
 function DolgubonSetCrafter.AddSmithingRequest(pattern, isCP, level, styleIndex, traitIndex, useUniversalStyleItem, station, setIndex, quality, autocraft)
 	local t = AddForiegnSmithingRequest(pattern, isCP, level, styleIndex, traitIndex, useUniversalStyleItem, station, setIndex, quality, autocraft, nil, LazyCrafter)
-	
+
 	return t.Reference
 end
 
@@ -932,9 +932,9 @@ end
 EVENT_MANAGER:RegisterForEvent("Set Crafter", EVENT_INVENTORY_SINGLE_SLOT_UPDATE, slotUpdate)
 
 --[[
-@Dolgubon I'd prefer getting fedback upon craft requests or what went wrong or what succeeded at a fixed line in your addon UI, 
-bottom line like a status text. Having popups and tooltips everywhere is just annoying, and the click sound for each clicked entry etc. 
-too btw! If you do a tooltip, please put everthing in one tooltip like Scootworks showed as example. If it's an error, colorize it red 
+@Dolgubon I'd prefer getting fedback upon craft requests or what went wrong or what succeeded at a fixed line in your addon UI,
+bottom line like a status text. Having popups and tooltips everywhere is just annoying, and the click sound for each clicked entry etc.
+too btw! If you do a tooltip, please put everthing in one tooltip like Scootworks showed as example. If it's an error, colorize it red
 and/or (for the colorblinds) use an icon via zo_iconTextFormat to show it does not work.
 
 ]]

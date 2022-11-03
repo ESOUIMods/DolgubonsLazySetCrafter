@@ -1,7 +1,7 @@
 -- Dolgubon's Lazy Set Crafter
 -- Created December 2016
 -- Last Modified: December 23 2016
--- 
+--
 -- Created by Dolgubon (Joseph Heinzle)
 -----------------------------------
 --
@@ -31,7 +31,7 @@ end
 DolgubonSetCrafter.armourTraits[#DolgubonSetCrafter.armourTraits + 1] = {[1] = ITEM_TRAIT_TYPE_ARMOR_NIRNHONED + 1, [2] = GetString(SI_ITEMTRAITTYPE26)} -- Nirnhoned
 DolgubonSetCrafter.weaponTraits[#DolgubonSetCrafter.weaponTraits + 1] = {[1] = ITEM_TRAIT_TYPE_WEAPON_NIRNHONED + 1, [2] = GetString(SI_ITEMTRAITTYPE25)}  -- Nirnhoned
 
-DolgubonSetCrafter.jewelryTraits = 
+DolgubonSetCrafter.jewelryTraits =
 {
 	{ITEM_TRAIT_TYPE_NONE + 1 , GetString( SI_ITEMTRAITTYPE0 )},
 	{ITEM_TRAIT_TYPE_JEWELRY_HEALTHY + 1 , GetString(SI_ITEMTRAITTYPE21)},
@@ -42,13 +42,13 @@ DolgubonSetCrafter.jewelryTraits =
 	{ITEM_TRAIT_TYPE_JEWELRY_TRIUNE + 1 , GetString(SI_ITEMTRAITTYPE30)},
 	{ITEM_TRAIT_TYPE_JEWELRY_BLOODTHIRSTY + 1 , GetString(SI_ITEMTRAITTYPE31)},
 	{ITEM_TRAIT_TYPE_JEWELRY_PROTECTIVE + 1 , GetString(SI_ITEMTRAITTYPE32)},
-	{ITEM_TRAIT_TYPE_JEWELRY_INFUSED + 1 , GetString(SI_ITEMTRAITTYPE33)},	
+	{ITEM_TRAIT_TYPE_JEWELRY_INFUSED + 1 , GetString(SI_ITEMTRAITTYPE33)},
 }
 
 
 --------------------------------------
 --- STYLES
-	
+
 
 
 
@@ -64,7 +64,7 @@ for i = 1, GetNumValidItemStyles() do
 
 end
 table.sort(styles, function (a,b) return a[2]<b[2] end)--GetItemStyleMaterialLink(number itemStyleId, number LinkStyle linkStyle)
--- Add Colours based on knowledge 
+-- Add Colours based on knowledge
 for i = 1, #styles do
 	local colour = "|cFFFFFF"
 	if not IsSmithingStyleKnown(styles[i][1]) then colour = "|c808080"  end
@@ -81,9 +81,9 @@ DolgubonSetCrafter.quality = {}
 
 for i = 1, 5 do
 	local qualityColor = ZO_ColorDef:New(GetInterfaceColor(INTERFACE_COLOR_TYPE_ITEM_QUALITY_COLORS, i))
-    
-    DolgubonSetCrafter.quality[i] = {[1] = i, [2] = qualityColor:Colorize(GetString(SI_ITEMQUALITY0 + i)),  [3] = GetString(SI_ITEMQUALITY0 + i)} 
-	
+
+    DolgubonSetCrafter.quality[i] = {[1] = i, [2] = qualityColor:Colorize(GetString(SI_ITEMQUALITY0 + i)),  [3] = GetString(SI_ITEMQUALITY0 + i)}
+
 end
 
 --------------------------------------
@@ -108,13 +108,13 @@ local requirementJumps = { -- At these material indexes, the material required c
 
 local additionalRequirements = -- Seperated by station. The additional amount of mats added to the base amount.
 {
-	[CRAFTING_TYPE_BLACKSMITHING] = 
+	[CRAFTING_TYPE_BLACKSMITHING] =
 	{ 2, 2, 2, 4, 4, 4, 1, 6, 4, 4, 4, 5, 4, 4,
 	},
-	[CRAFTING_TYPE_WOODWORKING] = 
+	[CRAFTING_TYPE_WOODWORKING] =
 	{ 2, 5, 2, 2, 2, 2,
 	},
-	[CRAFTING_TYPE_CLOTHIER] = 
+	[CRAFTING_TYPE_CLOTHIER] =
 	{ 6, 6, 4, 4, 4, 5, 4, 4, 6, 4, 4, 4, 5, 4, 4,
 
 	},
@@ -132,7 +132,7 @@ for i = 1, 41 do
 end
 
 DolgubonSetCrafter.setIndexes = {}
-local LibLazyCrafting =  LibStub:GetLibrary("LibLazyCrafting")
+local LibLazyCrafting = LibLazyCrafting
 local t = LibLazyCrafting.GetSetIndexes()
 for i, value in pairs(t) do
 	if i ~=LibLazyCrafting.INDEX_NO_SET then -- don't want to sort the no set table in
@@ -150,13 +150,13 @@ DolgubonSetCrafter.jewelryEnchantments = {{0, "No Enchantment"}}
 DolgubonSetCrafter.armourEnchantments  = {{0, "No Enchantment"}}
 
 local function addGlyphInfo(enchantId, glyphResultId, enchantName, typeOfEnchant)
-	local tableToAddTo 
+	local tableToAddTo
 	if ITEMTYPE_GLYPH_WEAPON == typeOfEnchant then
 		tableToAddTo = DolgubonSetCrafter.weaponEnchantments
 	elseif ITEMTYPE_GLYPH_JEWELRY == typeOfEnchant then
 		tableToAddTo = DolgubonSetCrafter.jewelryEnchantments
 	elseif ITEMTYPE_GLYPH_ARMOR == typeOfEnchant then
-		tableToAddTo = DolgubonSetCrafter.armourEnchantments 
+		tableToAddTo = DolgubonSetCrafter.armourEnchantments
 	end
 	table.insert(tableToAddTo, {enchantId, enchantName, glyphResultId})
 end
@@ -206,14 +206,14 @@ end
 
 
 
---[[ TODO: 
+--[[ TODO:
 1 make the toggle button moveable - Check
 2. make a control container for the left side of stuff - Check
 3. Add craft now button - Check
 4. Add crown mimic stone toggle - Check
 5. Reticle colouring - Check
 6. Add new amount of item to the valuable reward text - Check
-7. Resizing - Check	
+7. Resizing - Check
 8. Save Window Size - Check
 9. Add pricing - Check
 10. Look into requirements weirdness - Fixed I think?

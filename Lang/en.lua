@@ -46,6 +46,8 @@ DolgubonSetCrafter.localizedStrings.UIStrings.inProgressCrafting    = "This item
 DolgubonSetCrafter.localizedStrings.UIStrings.addSelectionFavourite = "Save Selections"
 DolgubonSetCrafter.localizedStrings.UIStrings.addQueueFavourite		= "Save Queue"
 DolgubonSetCrafter.localizedStrings.UIStrings.showFavourites 		= "Show Favourites"
+DolgubonSetCrafter.localizedStrings.UIStrings.loadQueueAsIs 		= "Load with saved level"
+DolgubonSetCrafter.localizedStrings.UIStrings.loadQueueCurrentLevel	= "Load with currently selected level"
 
 DolgubonSetCrafter.localizedStrings.SettingsStrings = {}
 
@@ -60,24 +62,24 @@ DolgubonSetCrafter.localizedStrings.SettingsStrings.saveLastChoice				= "Save Ch
 DolgubonSetCrafter.localizedStrings.SettingsStrings.saveLastChoiceTooltip		= "Save the last selected choices"
 DolgubonSetCrafter.localizedStrings.SettingsStrings.closeOnExit                  = "Close on Station Exit"
 DolgubonSetCrafter.localizedStrings.SettingsStrings.closeOnExitTooltip           = "Close the Set Crafter UI when exiting a crafting station"
-DolgubonSetCrafter.localizedStrings.SettingsStrings.useCharacterSettings         = "Use character settings" 
+DolgubonSetCrafter.localizedStrings.SettingsStrings.useCharacterSettings         = "Use character settings"
 DolgubonSetCrafter.localizedStrings.SettingsStrings.useCharacterSettingsTooltip  = "Use character specific settings on this character only"
 DolgubonSetCrafter.localizedStrings.SettingsStrings.showToggleButton              = "Always show toggle button"
 DolgubonSetCrafter.localizedStrings.SettingsStrings.showToggleButtonTooltip       = "Show the UI toggle button at all times"
 
-DolgubonSetCrafter.localizedStrings.weaponNames = 
+DolgubonSetCrafter.localizedStrings.weaponNames =
 {
 	"Axe", "Mace", "Sword", "Battle Axe", "Maul", "Greatsword", "Dagger", "Bow", "Fire Staff", "Ice Staff", "Lightning Staff", "Restoration Staff", "Shield"
 }
-DolgubonSetCrafter.localizedStrings.pieceNames = 
+DolgubonSetCrafter.localizedStrings.pieceNames =
 {
-	"Chest","Feet","Hands","Head","Legs","Shoulders","Belt","Jerkin",  
+	"Chest","Feet","Hands","Head","Legs","Shoulders","Belt","Jerkin",
 }
-DolgubonSetCrafter.localizedStrings.jewelryNames = 
+DolgubonSetCrafter.localizedStrings.jewelryNames =
 {
 	"Ring" , "Ring", "Necklace",
 }
-DolgubonSetCrafter.localizedStrings.armourTypes = 
+DolgubonSetCrafter.localizedStrings.armourTypes =
 {
 	"Heavy", "Medium", "Light"
 }
@@ -107,7 +109,7 @@ function FurC.LoadFrameInfo()
 
 end
 
-function FurC.SaveFrameInfo()    
+function FurC.SaveFrameInfo()
 	local settings = FurC.settings["gui"]
 
 	settings["lastX"]    = FurC_GUI:GetLeft()
@@ -120,14 +122,14 @@ function FurC.SaveFrameInfo()
 end
 
 manavortex @manavortex 04:40
-The suggestion was to clear the two "clear xx" buttons away in favour of a little x in a circle or so 
+The suggestion was to clear the two "clear xx" buttons away in favour of a little x in a circle or so
 And it's resizeable because
  <TopLevelControl name="FurC_GUI" clampedToScreen="true"  movable="true" mouseEnabled="true" hidden="true" resizeHandleSize="10">
 			<DimensionConstraints x="800" y="500" minX="850" minY="200" maxY="2000"/>
 			<Anchor point="TOPRIGHT" relativeTo="GUI_ROOT" relativePoint="TOPRIGHT" offsetX="-25" offsetY="40" />
 			<OnMoveStop>FurC.SaveFrameInfo("onMoveStop")</OnMoveStop>
 
-			<OnResizeStop>FurC.OnResizeStop()</OnResizeStop>            
+			<OnResizeStop>FurC.OnResizeStop()</OnResizeStop>
 			<Controls> ... </Controls>
 </TopLevelControl>]]
 

@@ -1,4 +1,4 @@
-local panel =  
+local panel =
 {
      type = "panel",
      name = "Lazy Set Crafter",
@@ -18,12 +18,12 @@ local options =
 {
 	{
 		type = "header",
-		name = function() 
+		name = function()
 			local profile = SettingsStrings.accountWide
 			if DolgubonSetCrafter.charSavedVars.useCharacterSettings then
 				profile = SettingsStrings.characterSpecific
 			end
-			return  string.format(SettingsStrings.nowEditing, profile)  
+			return  string.format(SettingsStrings.nowEditing, profile)
 		end, -- or string id or function returning a string
 	},
 	{
@@ -31,7 +31,7 @@ local options =
 		name = SettingsStrings.useCharacterSettings,
 		tooltip = SettingsStrings.useCharacterSettingsTooltip,
 		getFunc = function() return DolgubonSetCrafter.charSavedVars.useCharacterSettings end,
-		setFunc = function(value) 
+		setFunc = function(value)
 			DolgubonSetCrafter.charSavedVars.useCharacterSettings = value
 		end,
 	},
@@ -46,7 +46,7 @@ local options =
 		name = SettingsStrings.showAtStation,
 		tooltip =SettingsStrings.showAtStationTooltip,
 		getFunc = function() return DolgubonSetCrafter:GetSettings().OpenAtCraftStation end,
-		setFunc = function(value) 
+		setFunc = function(value)
 			DolgubonSetCrafter:GetSettings().OpenAtCraftStation = value
 		end,
 	},
@@ -55,7 +55,7 @@ local options =
 		name = SettingsStrings.closeOnExit,
 		tooltip =SettingsStrings.closeOnExitTooltip,
 		getFunc = function() return DolgubonSetCrafter:GetSettings().closeOnExit end,
-		setFunc = function(value) 
+		setFunc = function(value)
 			DolgubonSetCrafter:GetSettings().closeOnExit = value
 		end,
 	},
@@ -64,18 +64,18 @@ local options =
 		name = SettingsStrings.showToggleButton,
 		tooltip =SettingsStrings.showToggleButtonTooltip,
 		getFunc = function() return DolgubonSetCrafter:GetSettings().showToggle end,
-		setFunc = function(value) 
+		setFunc = function(value)
 			DolgubonSetCrafter:GetSettings().showToggle = value
 			DolgubonSetCrafterToggle:SetHidden(not value )
 		end,
 	},
-	
+
 	{
 		type = "checkbox",
 		name = SettingsStrings.saveLastChoice,
 		tooltip =SettingsStrings.saveLastChoiceTooltip,
 		getFunc = function() return DolgubonSetCrafter.savedvars.saveLastChoice end,
-		setFunc = function(value) 
+		setFunc = function(value)
 			DolgubonSetCrafter.savedvars.saveLastChoice = value
 		end,
 	},
@@ -85,19 +85,19 @@ local options =
 	-- 	name = SettingsStrings.showFavourites,
 	-- 	tooltip =SettingsStrings.showFavouritesTooltip,
 	-- 	getFunc = function() return DolgubonSetCrafter:GetSettings().showFavourites end,
-	-- 	setFunc = function(value) 
+	-- 	setFunc = function(value)
 	-- 		DolgubonSetCrafter:GetSettings().showFavourites = value
 	-- 		DolgubonSetCrafterWindowFavourites:SetHidden(not value)
 	-- 	end,
 	-- },
-	
-	
+
+
 }
 
 function DolgubonSetCrafter.initializeFunctions.initializeSettingsMenu()
 
-	local LAM = LibStub:GetLibrary("LibAddonMenu-2.0")
+	local LAM = LibAddonMenu2
 	LAM:RegisterAddonPanel("DolgubonsSetCrafter", panel)
-	
+
 	LAM:RegisterOptionControls("DolgubonsSetCrafter", options)
 end
