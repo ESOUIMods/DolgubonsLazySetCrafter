@@ -6,7 +6,7 @@
 -- Passing a control, along with two textures (one for the 'ON' state, and one for the 'OFF' state) will allow it to be toggled.
 function DolgubonSetCrafter.createToggle(control, onTexture, offTexture, onOverTexture, offOverTexture , initialToggleValue)
 	-- add a value to the control. If no initial value is specified, set it to false.
-	-- DO NOT SET! 
+	-- DO NOT SET!
 	control.toggleValue = initialToggleValue or false
 	-- Sets the textures to the passed values; if no value is passed, set to the current texture; if none, then no texture
 	control.onTexture = onTexture or (control.GetNormalTexture and control:GetNormalTexture()) or ""
@@ -15,12 +15,12 @@ function DolgubonSetCrafter.createToggle(control, onTexture, offTexture, onOverT
 	control.offOverTexture = offOverTexture or nil
 
 	-- Set the initial texture; this can be done in the xml, but a bit of redundancy doesn't hurt
-	if control.toggleValue then 
-		control:SetNormalTexture(onTexture) 
+	if control.toggleValue then
+		control:SetNormalTexture(onTexture)
 		if onOverTexture then control:SetMouseOverTexture(onOverTexture) end
-	else 
+	else
 		if offOverTexture then control:SetMouseOverTexture(offOverTexture) end
-		control:SetNormalTexture(offTexture) 
+		control:SetNormalTexture(offTexture)
 	end
 
 	-- Toggle to a set value
@@ -43,7 +43,7 @@ function DolgubonSetCrafter.createToggle(control, onTexture, offTexture, onOverT
 
 	function control:setState(newState)
 		if newState == self.toggleValue then
-			return 
+			return
 		elseif newState then
 			control:toggleOn()
 		else
@@ -68,10 +68,9 @@ function DolgubonSetCrafter.createToggle(control, onTexture, offTexture, onOverT
 		-- Sets the toggle value to the other value
 		if self.toggleValue then
 			control:toggleOff()
-			
 		else
 			control:toggleOn()
-			
+
 		end
 	end
 

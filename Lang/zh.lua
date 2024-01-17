@@ -34,6 +34,8 @@ DolgubonSetCrafter.localizedStrings.UIStrings.craftStart			= "开始制造"
 DolgubonSetCrafter.localizedStrings.UIStrings.materialScrollTitle	= "消耗材料列表"
 DolgubonSetCrafter.localizedStrings.UIStrings.mailRequirements      = "邮件发送材料需求"
 DolgubonSetCrafter.localizedStrings.UIStrings.chatRequirements      = "聊天发送材料需求"
+DolgubonSetCrafter.localizedStrings.UIStrings.chatRequest 			= "Request to Chat"
+DolgubonSetCrafter.localizedStrings.UIStrings.mailRequest 			= "Mail Request"
 DolgubonSetCrafter.localizedStrings.UIStrings.defaultUserId         = "输入 @用户名"
 DolgubonSetCrafter.localizedStrings.UIStrings.noSet                 = "无套装属性"
 DolgubonSetCrafter.localizedStrings.UIStrings.usesMimicStone        = "使用皇冠风格石来制造物品"
@@ -45,9 +47,12 @@ DolgubonSetCrafter.localizedStrings.UIStrings.enchantQuality        = "附魔品
 DolgubonSetCrafter.localizedStrings.UIStrings.inProgressCrafting    = "这件物品已经在制造，已制造成品无法取消"
 DolgubonSetCrafter.localizedStrings.UIStrings.addSelectionFavourite = "保存所选"
 DolgubonSetCrafter.localizedStrings.UIStrings.addQueueFavourite		= "保存队列"
+DolgubonSetCrafter.localizedStrings.UIStrings.FavouritesTitle 		= "Favourites"
 DolgubonSetCrafter.localizedStrings.UIStrings.showFavourites 		= "查看收藏"
 DolgubonSetCrafter.localizedStrings.UIStrings.loadQueueAsIs 		= "读取保存的等级"
 DolgubonSetCrafter.localizedStrings.UIStrings.loadQueueCurrentLevel	= "用当前选定的等级加载"
+DolgubonSetCrafter.localizedStrings.UIStrings.resetPatterns			= "Reset Patterns"
+DolgubonSetCrafter.localizedStrings.UIStrings.totalCostTitle		= "Total Cost"
 
 DolgubonSetCrafter.localizedStrings.SettingsStrings = {}
 
@@ -62,24 +67,25 @@ DolgubonSetCrafter.localizedStrings.SettingsStrings.saveLastChoice				= "保存�
 DolgubonSetCrafter.localizedStrings.SettingsStrings.saveLastChoiceTooltip		= "保存最后一次的选择"
 DolgubonSetCrafter.localizedStrings.SettingsStrings.closeOnExit                  = "退出制作站时关闭"
 DolgubonSetCrafter.localizedStrings.SettingsStrings.closeOnExitTooltip           = "当退出制作站时关闭插件"
-DolgubonSetCrafter.localizedStrings.SettingsStrings.useCharacterSettings         = "使用角色设定" 
+DolgubonSetCrafter.localizedStrings.SettingsStrings.useCharacterSettings         = "使用角色设定"
 DolgubonSetCrafter.localizedStrings.SettingsStrings.useCharacterSettingsTooltip  = "使用当前角色的单独设定"
 DolgubonSetCrafter.localizedStrings.SettingsStrings.showToggleButton              = "显示插件按钮"
 DolgubonSetCrafter.localizedStrings.SettingsStrings.showToggleButtonTooltip       = "在界面上显示插件的按钮"
+DolgubonSetCrafter.localizedMatScrollWidth 											= 250
 
-DolgubonSetCrafter.localizedStrings.weaponNames = 
+DolgubonSetCrafter.localizedStrings.weaponNames =
 {
 	"斧头", "槌", "长剑", "战斧", "重槌", "巨剑", "匕首", "弓", "火焰法杖", "寒冰法杖", "闪电法杖", "恢复法杖", "盾"
 }
-DolgubonSetCrafter.localizedStrings.pieceNames = 
+DolgubonSetCrafter.localizedStrings.pieceNames =
 {
-	"胸甲","鞋","手套","头盔","护腿","护肩","腰带","夹克",  
+	"胸甲","鞋","手套","头盔","护腿","护肩","腰带","夹克",
 }
-DolgubonSetCrafter.localizedStrings.jewelryNames = 
+DolgubonSetCrafter.localizedStrings.jewelryNames =
 {
 	"戒指" , "戒指", "项链",
 }
-DolgubonSetCrafter.localizedStrings.armourTypes = 
+DolgubonSetCrafter.localizedStrings.armourTypes =
 {
 	"重甲", "中甲", "轻甲"
 }

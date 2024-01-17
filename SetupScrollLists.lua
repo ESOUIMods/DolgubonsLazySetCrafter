@@ -17,30 +17,31 @@ local updateMaterials = function() end
 function DolgubonScroll:New(control)
 
 	ZO_SortFilterList.InitializeSortFilterList(self, control)
-	
+
 	local SorterKeys =
 	{
 		name = {},
 		Reference = {},
 	}
-	
+
  	self.masterList = {}
-	
+
  	ZO_ScrollList_AddDataType(self.list, 1, "CraftingRequestTemplate", 30, function(control, data) self:SetupEntry(control, data) end)
+ 	ZO_ScrollList_AddDataType(self.list, 2, "FurnitureRequestTemplate", 30, function(control, data) self:SetupFurnitureEntry(control, data) end)
  	ZO_ScrollList_EnableHighlight(self.list, "ZO_ThinListHighlight")
-	
+
 	self.currentSortKey = "Reference"
 	self.currentSortOrder = ZO_SORT_ORDER_UP
  	self.sortFunction = function(listEntry1, listEntry2) return ZO_TableOrderingFunction(listEntry1.data[1], listEntry2.data[1], "Reference", SorterKeys, self.currentSortOrder) end
 	self.data = DolgubonSetCrafter.savedvars.queue
 	return self
-	
+
 end
 
 local validPriceSources
 
 local function getLibPrice(itemLink)
-	if LibPrice then 
+	if LibPrice then
 		local price  = LibPrice.ItemLinkToPriceGold(itemLink)
 		if price then
 			return price
@@ -53,7 +54,7 @@ local function getMMPrice(itemLink)
   		price = MasterMerchant:itemStats(itemLink, false).avgPrice
 		if price then
 			return price
-		end 
+		end
 	end
 end
 local function getATTPrice(itemLink)
@@ -90,7 +91,7 @@ local function addonChoicePrice(itemLink)
 end
 
 local function generateValidPriceSources()
-	local validPriceSources = 
+	local validPriceSources =
 	{
 		{"Currently using Set Crafter's choice", true, addonChoicePrice},
 		{"Currently using prices from LibPrice", LibPrice, getLibPrice},
@@ -146,7 +147,8 @@ local function updateCost()
 		local price = round(getPrice(link))
 
 		cost = cost + price * v["Amount"]
-	end 
+	end
+	cost = zo_strformat(SI_NUMBER_FORMAT, ZO_AbbreviateNumber(cost, NUMBER_ABBREVIATION_PRECISION_HUNDREDTHS, USE_LOWERCASE_NUMBER_SUFFIXES))
 	DolgubonSetCrafterWindowRightCost:SetText("Total Cost: "..cost.." |t20:20:esoui/art/currency/currency_gold_64.dds|t")
 end
 
@@ -157,24 +159,24 @@ local function updateCurrentAmounts()
 		local link = v["Name"]
 		local bag, bank, craft = GetItemLinkStacks(link)
 		v["Current"] =  bag + bank + craft
-	end 
+	end
 end
 
 -- Create the scroll list for the materials
 function MaterialScroll:New(control)
 	ZO_SortFilterList.InitializeSortFilterList(self, control)
-	
+
 	local SorterKeys =
 	{
 		name = {},
 		Amount = {},
 	}
-	
+
  	self.masterList = {}
-	
+
  	ZO_ScrollList_AddDataType(self.list, 1, "SetCrafterMaterialTemplate", 30, function(control, data) self:SetupEntry(control, data) end)
  	ZO_ScrollList_EnableHighlight(self.list, "ZO_ThinListHighlight")
-	
+
 	self.currentSortKey = "Amount"
 	self.currentSortOrder = ZO_SORT_ORDER_DOWN
  	self.sortFunction = function(listEntry1, listEntry2) return ZO_TableOrderingFunction(listEntry1.data[1], listEntry2.data[1], "Amount", SorterKeys, self.currentSortOrder) end
@@ -189,23 +191,23 @@ function MaterialScroll:New(control)
 
 
 	return self
-	
+
 end
 
 function FavouriteScroll:New(control)
 	ZO_SortFilterList.InitializeSortFilterList(self, control)
-	
+
 	local SorterKeys =
 	{
 		name = {},
-		
+
 	}
-	
+
  	self.masterList = {}
-	
+
  	ZO_ScrollList_AddDataType(self.list, 1, "SetCrafterFavouriteTemplate", 30, function(control, data) self:SetupEntry(control, data) end)
  	ZO_ScrollList_EnableHighlight(self.list, "ZO_ThinListHighlight")
-	
+
 	self.currentSortKey = "name"
 	self.currentSortOrder = ZO_SORT_ORDER_DOWN
  	self.sortFunction = function(listEntry1, listEntry2) return 1 end
@@ -215,7 +217,7 @@ function FavouriteScroll:New(control)
 		originalRefresh(...)
 	end
 	return self
-	
+
 end
 
 function FavouriteScroll:SetupEntry(control, data)
@@ -223,7 +225,7 @@ function FavouriteScroll:SetupEntry(control, data)
 	control.data = data
 	control:setCurrent(data[1])
 	control.label = control:GetNamedChild("Name")
-	
+
 	control.label:SetText("Hello")
 	control.label:SetText(data[1].name)
 
@@ -243,7 +245,7 @@ local function formatAmountEntry(self, amountRequired, current)
 	end
 	self:SetText(text)
 	local width = self:GetTextWidth()
-	
+
 end
 
 function MaterialScroll:SetupEntry(control, data)
@@ -261,7 +263,7 @@ function MaterialScroll:SetupEntry(control, data)
 		end
 	end
 	local BG = GetControl(control, "BG")
-	
+
 	if BG then
 		BG:SetAnchorFill(control)
 		--BG.nonRecolorable = false
@@ -272,7 +274,7 @@ function MaterialScroll:SetupEntry(control, data)
 			--BG:SetColor(1,0.5,0.5,0.2)
 			BG:SetCenterColor(1, 0.5, 0.5, 0.2)
 			BG:SetEdgeColor(0,0,0,0)
-			
+
 		else
 			--BG:SetColor(0.5,0.8,1,0.2)
 			BG:SetEdgeColor(0,0,0, 0)
@@ -298,7 +300,7 @@ outputTexts = {}
 local function outputMultipleLinesChat(textToOutput)
 	StartChatInput(textToOutput[1])
 	local function OutputNextLine(eventCode,  channelType, fromName, text, isCustomerService, fromDisplayName)
-	
+
 		if fromDisplayName == GetDisplayName() or channelType == CHAT_CHANNEL_WHISPER_SENT then
 			testActualOutput = text
 			testAssume = textToOutput[1]
@@ -323,14 +325,14 @@ function DolgubonSetCrafter.outputAllMats()
 	end
 	if #tempMatHolder == 0 then return end
 	table.sort(tempMatHolder, function(a, b) return a["Amount"]>b["Amount"]end)
-	
+
 	outputTexts  = {}
 	local text = "Requires: "
-	
+
 	for i = 1, #tempMatHolder do
-		
+
 		if i %4 ==1 and i > 1 then
-			
+
 			outputTexts[#outputTexts + 1] = text
 			text = "And: "
 		end
@@ -345,9 +347,9 @@ end
 
 
 function DolgubonSetCrafter.outputRequest()
-	if next(DolgubonSetCrafter.materialList) == nil then 
+	if next(DolgubonSetCrafter.materialList) == nil then
 		d("Dolgubon's Lazy Set Crafter: No items are in the queue! No mails sent")
-		return 
+		return
 	end
 	local sets = {} -- A list of all items under the current set type.
 	local setTypes = {} -- Used to keep the sets list in a certain order.
@@ -358,12 +360,14 @@ function DolgubonSetCrafter.outputRequest()
 	local mailQueue = DolgubonSetCrafter.savedvars.queue
 
 	for i, request in ipairs(mailQueue) do
-		local setName = request["Set"][2]
-		if sets[setName] == nil then
-			sets[setName] = {}
-			table.insert(setTypes, setName) -- Save this index of this set's name
+		if request.typeId == 1 then
+			local setName = request["Set"][2]
+			if sets[setName] == nil then
+				sets[setName] = {}
+				table.insert(setTypes, setName) -- Save this index of this set's name
+			end
+			table.insert(sets[setName], DolgubonSetCrafter.convertRequestToText(request)) -- Store the readable crafting information
 		end
-		table.insert(sets[setName], DolgubonSetCrafter.convertRequestToText(request)) -- Store the readable crafting information
 	end
 	for setName, requestInfos in pairs(sets) do
 		outputTexts[#outputTexts + 1] = "From the set "..setName..", please make:"
@@ -379,14 +383,23 @@ function DolgubonSetCrafter.outputRequest()
 		outputTexts[#outputTexts + 1] = text
 		text = ""
 	end
+	local addedProvisioningGreeting = false
+	for i, request in pairs(mailQueue) do
+		if request.typeId == 2 then
+			if not addedProvisioningGreeting then
+				addedProvisioningGreeting = true
+				outputTexts[#outputTexts + 1] = "Please create these provisioning/furniture items:"
+			end
+			outputTexts[#outputTexts + 1] = request.Quantity[1].."x "..request.Link
+		end
+	end
 	outputMultipleLinesChat(outputTexts)
-
 end
 
 
 
 local function removeFauxRequest(reference)
-	for i = 1, #DolgubonSetCrafter.savedvars.queue do 
+	for i = 1, #DolgubonSetCrafter.savedvars.queue do
 
 		if DolgubonSetCrafter.savedvars.queue[i]["reference"]==reference then
 			table.remove( DolgubonSetCrafter.savedvars.queue, i)
@@ -415,7 +428,7 @@ function DolgubonScroll:SetupEntry(control, data)
 				control[k]:SetText(v[2])
 				control[k]:SetColor(1,1,0)
 
-				
+
 				if k == "Enchant" then
 					control[k]:ApplyEnchantColour()
 				else
@@ -439,25 +452,57 @@ function DolgubonScroll:SetupEntry(control, data)
 		WINDOW_MANAGER:ApplyTemplateToControl(button, "SetCrafterRequestInProgress")
 	else
 		WINDOW_MANAGER:ApplyTemplateToControl(button, "SetCrafterRequestNotInProgress")
-		
+
 		button.tooltip = nil
 	end
 
 	function button:onClickety ()   DolgubonSetCrafter.removeFromScroll(data[1].Reference, true)  end
 	--function control:onClicked () DolgubonsGuildBlacklistWindowInputBox:SetText(data.name) end
-	
+
 	ZO_SortFilterList.SetupRow(self, control, data)
-	
+
+end
+
+function DolgubonScroll:SetupFurnitureEntry(control, data)
+
+	control.data = data
+	-- control.qualityString = zo_strformat(DolgubonSetCrafter.localizedStrings.UIStrings.qualityString, data[1].Quality[2])
+	local qual = data[1]["Quality"][1]
+	local qualityColour = {GetItemQualityColor(qual or 2)}
+	for k , v in pairs (data[1]) do
+
+		control[k] = GetControl(control, k)
+
+		if control[k] then
+			if type(v)=="table" then
+				control[k]:SetText(v[2])
+				control[k]:SetHidden(false)
+				control[k]:SetColor(unpack(qualityColour))
+				control[k]:ApplyColour(true)
+			end
+		end
+	end
+
+	local button = control:GetNamedChild( "RemoveButton")
+	WINDOW_MANAGER:ApplyTemplateToControl(button, "SetCrafterRequestNotInProgress")
+
+	button.tooltip = nil
+
+	function button:onClickety ()   DolgubonSetCrafter.removeFromScroll(data[1].Reference, true)  end
+	--function control:onClicked () DolgubonsGuildBlacklistWindowInputBox:SetText(data.name) end
+
+	ZO_SortFilterList.SetupRow(self, control, data)
+
 end
 
 
 function DolgubonScroll:BuildMasterList()
 	self.masterList = {}
 
-	for k, v in pairs(self.data) do 
+	for k, v in pairs(self.data) do
 
 		table.insert(self.masterList, {
-			v
+			v, ["typeId"] = v.typeId
 		})
 
 	end
@@ -475,7 +520,7 @@ function DolgubonScroll:FilterScrollList()
 	ZO_ClearNumericallyIndexedTable(scrollData)
 	for i = 1, #self.masterList do
 		local data = self.masterList[i]
-		table.insert(scrollData, ZO_ScrollList_CreateDataEntry(1, data))
+		table.insert(scrollData, ZO_ScrollList_CreateDataEntry(data.typeId or 1, data))
 	end
 end
 
@@ -488,7 +533,7 @@ FavouriteScroll.FilterScrollList = DolgubonScroll.FilterScrollList
 
 function DolgubonSetCrafter.setupScrollLists()
 	DolgubonSetCrafter.manager = DolgubonScroll:New(CraftingQueueScroll) -- check
-	
+
 	DolgubonSetCrafter.materialManager = MaterialScroll:New(DolgubonSetCrafterWindowMaterialList)
 	DolgubonSetCrafter.favouritesManager = FavouriteScroll:New(DolgubonSetCrafterWindowFavouritesScroll)
 	validPriceSources = generateValidPriceSources()
@@ -508,7 +553,7 @@ updateList = function ()
 	DolgubonSetCrafter.manager:RefreshData()
 	DolgubonSetCrafter.materialManager:RefreshData()
 	DolgubonSetCrafter.favouritesManager:RefreshData()
-	if #DolgubonSetCrafter.savedvars.queue == 0 then 
+	if #DolgubonSetCrafter.savedvars.queue == 0 then
 		CraftingQueueScrollCounter:SetText()
 	else
 		CraftingQueueScrollCounter:SetText(" - "..countTotalItems())

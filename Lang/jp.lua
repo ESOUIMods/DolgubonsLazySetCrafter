@@ -2,7 +2,7 @@ DolgubonSetCrafter = DolgubonSetCrafter or {}
 
 DolgubonSetCrafter.lang = "jp"
 
-DolgubonSetCrafter.localizedStrings = DolgubonSetCrafter.localizedStrings or  {}
+DolgubonSetCrafter.localizedStrings = {}
 
 DolgubonSetCrafter.localizedStrings.UIStrings = DolgubonSetCrafter.localizedStrings.UIStrings or  {}
 DolgubonSetCrafter.localizedStrings.UIStrings.patternHeader			= "装備の部位を選択してください"
@@ -34,6 +34,8 @@ DolgubonSetCrafter.localizedStrings.UIStrings.craftStart			= "クラフト開始
 DolgubonSetCrafter.localizedStrings.UIStrings.materialScrollTitle	= "材料の要件"
 DolgubonSetCrafter.localizedStrings.UIStrings.mailRequirements      = "必要な材料をメールする"
 DolgubonSetCrafter.localizedStrings.UIStrings.chatRequirements      = "必要な材料をチャットする"
+DolgubonSetCrafter.localizedStrings.UIStrings.chatRequest 			= "Request to Chat"
+DolgubonSetCrafter.localizedStrings.UIStrings.mailRequest 			= "Mail Request"
 DolgubonSetCrafter.localizedStrings.UIStrings.defaultUserId         = "@UserId を入力"
 DolgubonSetCrafter.localizedStrings.UIStrings.noSet                 = "セット効果なし"
 DolgubonSetCrafter.localizedStrings.UIStrings.usesMimicStone        = "このアイテムはミミックストーンを使用して作成されます"
@@ -45,11 +47,15 @@ DolgubonSetCrafter.localizedStrings.UIStrings.enchantQuality        = "付呪の
 DolgubonSetCrafter.localizedStrings.UIStrings.inProgressCrafting    = "このアイテムは処理中です。キャンセルできますが、一部のアイテムはすでに作成されています"
 DolgubonSetCrafter.localizedStrings.UIStrings.addSelectionFavourite = "セレクションを保存"
 DolgubonSetCrafter.localizedStrings.UIStrings.addQueueFavourite		= "キューを保存"
+DolgubonSetCrafter.localizedStrings.UIStrings.FavouritesTitle 		= "Favourites"
 DolgubonSetCrafter.localizedStrings.UIStrings.showFavourites 		= "お気に入りの表示"
 DolgubonSetCrafter.localizedStrings.UIStrings.loadQueueAsIs 		= "保存したレベルでロードする"
 DolgubonSetCrafter.localizedStrings.UIStrings.loadQueueCurrentLevel	= "選択中のレベルでロードする"
+DolgubonSetCrafter.localizedStrings.UIStrings.resetPatterns			= "Reset Patterns"
+DolgubonSetCrafter.localizedStrings.UIStrings.totalCostTitle		= "Total Cost"
 
-DolgubonSetCrafter.localizedStrings.SettingStrings = DolgubonSetCrafter.localizedStrings.SettingStrings or  {}
+DolgubonSetCrafter.localizedStrings.SettingsStrings = {}
+
 
 DolgubonSetCrafter.localizedStrings.SettingsStrings.nowEditing                   = "%sの設定を変更しています"
 DolgubonSetCrafter.localizedStrings.SettingsStrings.accountWide                  = "アカウント共通"
@@ -65,7 +71,7 @@ DolgubonSetCrafter.localizedStrings.SettingsStrings.useCharacterSettings        
 DolgubonSetCrafter.localizedStrings.SettingsStrings.useCharacterSettingsTooltip  = "このキャラクターのみの固有の設定を使用します"
 DolgubonSetCrafter.localizedStrings.SettingsStrings.showToggleButton              = "トグルボタンの常時表示"
 DolgubonSetCrafter.localizedStrings.SettingsStrings.showToggleButtonTooltip       = "Set Crafterウィンドウの表示／非表示トグルボタンを常に表示します"
-
+DolgubonSetCrafter.localizedMatScrollWidth 											= 250
 
 DolgubonSetCrafter.localizedStrings.weaponNames =
 {
@@ -87,7 +93,5 @@ DolgubonSetCrafter.localizedStrings.armourTypes =
 --	"Heavy", "Medium", "Light"
 	"重装鎧", "中装鎧", "軽装鎧"
 }
-
-
 ZO_CreateStringId("SI_BINDING_NAME_SET_CRAFTER_OPEN", "Set Crafterウィンドウの表示／非表示")
 ZO_CreateStringId("SI_BINDING_NAME_SET_CRAFTER_ADD_MAIL_ITEM", "メール内のアイテムリンクをキューに追加")

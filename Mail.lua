@@ -1,7 +1,7 @@
--- Sends the current crating queue as a 
+-- Sends the current crating queue as a
 -- mail request to a user in a readable format.
 
--- Format is {  {subject1, body1 } , {subject2, body2 } } 
+-- Format is {  {subject1, body1 } , {subject2, body2 } }
 local mailOutputTexts = {}
 
 local out = DolgubonSetCrafter.out
@@ -28,14 +28,14 @@ local function compileMailText(subject, mailStarter, data, dataTransform)
 	mailOutputTexts = {}
 	local text
 	if type(mailStarter ) == "function" then
-		text = mailStarter()
-		text = continuedFrom..mailStarter(data[1])
+		-- text = mailStarter()
+		text = ""..mailStarter(data[1])
 	else
-		text = continuedFrom..mailStarter
+		text = ""..mailStarter
 	end
-	local nextAddition = ""	
+	local nextAddition = ""
 	for i = 1, #data do
-		
+
 		nextAddition = dataTransform(data[i]).."\n"
 		text =text.. dataTransform(data[i]).."\n"
 		if (#text + #nextAddition + #continueNext) > 690 and i<#data then
@@ -63,13 +63,13 @@ end
 
 local function beginMailing(destination)
 	for i = 1, #mailOutputTexts do
-		-- If a mail doesn't have a destination give it one. 
+		-- If a mail doesn't have a destination give it one.
 		-- Basically, only the new mails will get a destination
 		if not mailOutputTexts[i][3] then
 			mailOutputTexts[i][3] = destination
 		end
 	end
-	
+
 	RequestOpenMailbox() -- required
 	EVENT_MANAGER:RegisterForEvent(DolgubonSetCrafter.name,EVENT_MAIL_SEND_SUCCESS, MailNextLine)
 	MailNextLine()
@@ -81,13 +81,13 @@ local reqSubject = "Material Requirements"
 
 function DolgubonSetCrafter.mailAllMats(destinationOverride)
 	local destination = destinationOverride or DolgubonSetCrafterWindowRightInputBox:GetText()
-	if #destination < 4 then 
+	if #destination < 4 then
 		out("Invalid name")
-		return 
+		return
 	end
-	if next(DolgubonSetCrafter.materialList) == nil then 
+	if next(DolgubonSetCrafter.materialList) == nil then
 		d("Dolgubon's Lazy Set Crafter: No items are in the queue! No mails sent")
-		return 
+		return
 	end
 	DolgubonSetCrafter.updateList()
 	local tempMatHolder = {}
@@ -99,7 +99,7 @@ function DolgubonSetCrafter.mailAllMats(destinationOverride)
 
 
 	compileMailText(reqSubject, reqStarter, tempMatHolder, function(data) return tostring(data["Amount"]).." "..data["Name"] end)
-	
+
 	beginMailing(destination)
 end
 
@@ -164,13 +164,13 @@ end
 
 function DolgubonSetCrafter.MailAsRequest(destinationOverride)
 	local destination = destinationOverride or DolgubonSetCrafterWindowRightInputBox:GetText()
-	if #destination < 4 then 
+	if #destination < 4 then
 		out("Invalid name")
-		return 
+		return
 	end
-	if next(DolgubonSetCrafter.materialList) == nil then 
+	if next(DolgubonSetCrafter.materialList) == nil then
 		d("Dolgubon's Lazy Set Crafter: No items are in the queue! No mails sent")
-		return 
+		return
 	end
 
 	local sets = {} -- A list of all items under the current set type.
@@ -180,24 +180,36 @@ function DolgubonSetCrafter.MailAsRequest(destinationOverride)
 	local mailQueue = DolgubonSetCrafter.savedvars.queue
 
 	for i, request in ipairs(mailQueue) do
-		local setName = request["Set"][2]
-		if sets[setName] == nil then
-			sets[setName] = {}
-			table.insert(setTypes, setName) -- Save this index of this set's name
+		if request.typeId == 1 then
+			local setName = request["Set"][2]
+			if sets[setName] == nil then
+				sets[setName] = {}
+				table.insert(setTypes, setName) -- Save this index of this set's name
+			end
+			table.insert(sets[setName], DolgubonSetCrafter.convertRequestToText(request)) -- Store the readable crafting information
 		end
-		table.insert(sets[setName], DolgubonSetCrafter.convertRequestToText(request)) -- Store the readable crafting information
 	end
 	for setName, requestInfos in pairs(sets) do
+		table.insert(mailInfo, {text="-- "..setName.." --"})
 		for i = 1, #requestInfos do
 			table.insert(mailInfo, {text=requestInfos[i], set=setName})
 		end
-		
 	end
-
-	compileMailText(requestSubject, function(data) if data then return "\n".."-- "..data.set.." --\n"else return "\n" end end, mailInfo, function(s) return s.text end)
+	local addedProvisioningGreeting = false
+	for i, request in pairs(mailQueue) do
+		if request.typeId == 2 then
+			if not addedProvisioningGreeting then
+				addedProvisioningGreeting = true
+				table.insert(mailInfo, {text="Furniture/Provisioning Items"})
+				-- mailInfo[#mailInfo + 1] = "Please create these provisioning/furniture items:"
+			end
+			table.insert(mailInfo, {text=request.Quantity[1].."x "..request.Link, set="Furniture/Provisioning Items"})
+		end
+	end
+	compileMailText(requestSubject, function(data) if data.set then return "\n".."-- "..data.set.." --\n"else return "\n" end end, mailInfo, function(s) return s.text end)
 
 	beginMailing(destination)
-	if true then 
+	if true then
 		return
 	end
 end

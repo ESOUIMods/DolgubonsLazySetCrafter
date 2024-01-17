@@ -1,19 +1,20 @@
 -- Dolgubon's Lazy Set Crafter
 -- Created December 2016
 -- Last Modified: December 23 2016
--- 
+--
 -- Created by Dolgubon (Joseph Heinzle)
 -----------------------------------
 --
 -- This file sets up the Graphic User Interface for Dolgubon's Lazy Set Crafter (DLSC)
 -- Most of these functions are meant to be called by the main file
 -- A good portion are setup functions, called by the initialization function
--- 
+--
 
-
+-- GetRecipeInfo(number recipeListIndex, number recipeIndex)
+--  GetRecipeListInfo(number recipeListIndex)
 
 local queue
- 
+
 
 local spacingForButtons = 40
 
@@ -75,9 +76,9 @@ function DolgubonSetCrafter.setupLevelSelector()
 	end
 
 	DolgubonSetCrafterWindowInputInputBox.selectPrompt = zo_strformat(langStrings.UIStrings.selectPrompt,langStrings.UIStrings.level)
-	
+
 	if DolgubonSetCrafter.savedvars.saveLastChoice then
-		
+
 		if DolgubonSetCrafter.savedvars["level"] then
 
 			DolgubonSetCrafterWindowInputInputBox:SetText(DolgubonSetCrafter.savedvars["level"])
@@ -87,9 +88,9 @@ function DolgubonSetCrafter.setupLevelSelector()
 		end
 	end
 
-	if DolgubonSetCrafter.savedvars["level"] and DolgubonSetCrafter.savedvars.saveLastChoice then 
+	if DolgubonSetCrafter.savedvars["level"] and DolgubonSetCrafter.savedvars.saveLastChoice then
 		DolgubonSetCrafterWindowInputInputBox:SetText(DolgubonSetCrafter.savedvars["level"])
-	end 
+	end
 	if DolgubonSetCrafter.savedvars["multiplier"] and DolgubonSetCrafter.savedvars.saveLastChoice then
 		DolgubonSetCrafterWindowMultiplierInputInputBox:SetText(DolgubonSetCrafter.savedvars["multiplier"])
 	end
@@ -117,7 +118,7 @@ function DolgubonSetCrafter.autofillFunctions()
 end
 
 function DolgubonSetCrafter.setupLocalizedLabels()
-	
+
 	out(langStrings.UIStrings.patternHeader)
 	DolgubonSetCrafterWindowComboboxes:SetText 				(langStrings.UIStrings.comboboxHeader)
 	DolgubonSetCrafterWindowLeftAdd:SetText 				(langStrings.UIStrings.addToQueue)
@@ -130,8 +131,12 @@ function DolgubonSetCrafter.setupLocalizedLabels()
 	DolgubonSetCrafterWindowLeftCraft:SetText				(langStrings.UIStrings.craftStart)
 	DolgubonSetCrafterWindowRightOutputRequirements:SetText (langStrings.UIStrings.chatRequirements)
 	DolgubonSetCrafterWindowRightMailRequirements:SetText	(langStrings.UIStrings.mailRequirements)
-	DolgubonSetCrafterWindowRightLabel:SetText 				(langStrings.UIStrings.materialScrollTitle)
-
+	DolgubonSetCrafterWindowRightLabel:SetText				(langStrings.UIStrings.materialScrollTitle)
+	DolgubonSetCrafterWindowLeftResetPatterns:SetText		(langStrings.UIStrings.resetPatterns)
+	DolgubonSetCrafterWindowRightOutputRequest:SetText		(langStrings.UIStrings.chatRequest)
+	DolgubonSetCrafterWindowRightMailQueue:SetText			(langStrings.UIStrings.mailRequest)
+	DolgubonSetCrafterWindowRightCost:SetText				(langStrings.UIStrings.totalCostTitle)
+	DolgubonSetCrafterWindowFavouritesTitle:SetText			(langStrings.UIStrings.FavouritesTitle)
 end
 
 
@@ -189,18 +194,14 @@ function DolgubonSetCrafter.setupBehaviourToggles()
 	local autoCraft = DolgubonSetCrafterWindowLeftTogglesAutocraftCheckbox
 	local mimicStones = DolgubonSetCrafterWindowLeftTogglesMimicStonesCheckbox
 
-	DolgubonSetCrafter.createToggle(autoCraft,"esoui/art/cadwell/checkboxicon_checked.dds",	"esoui/art/cadwell/checkboxicon_unchecked.dds", 
+	DolgubonSetCrafter.createToggle(autoCraft,"esoui/art/cadwell/checkboxicon_checked.dds",	"esoui/art/cadwell/checkboxicon_unchecked.dds",
 		"esoui/art/cadwell/checkboxicon_unchecked.dds", "esoui/art/cadwell/checkboxicon_checked.dds", true )
-	DolgubonSetCrafter.createToggle(mimicStones,"esoui/art/cadwell/checkboxicon_checked.dds", "esoui/art/cadwell/checkboxicon_unchecked.dds", 
+	DolgubonSetCrafter.createToggle(mimicStones,"esoui/art/cadwell/checkboxicon_checked.dds", "esoui/art/cadwell/checkboxicon_unchecked.dds",
 		"esoui/art/cadwell/checkboxicon_unchecked.dds", "esoui/art/cadwell/checkboxicon_checked.dds", false )
 
 	autoCraft:GetNamedChild("Label"):SetText(DolgubonSetCrafter.localizedStrings.UIStrings.autoCraft)
-	if GetCVar("language.2") == "fr" then
-		mimicStones:GetNamedChild("Label"):SetText("Utiliser Pierre Cameleon")
-	else
-		mimicStones:GetNamedChild("Label"):SetText(GetString(SI_CRAFTING_CONFIRM_USE_UNIVERSAL_STYLE_ITEM_TITLE))
-		
-	end
+	mimicStones:GetNamedChild("Label"):SetText(DolgubonSetCrafter.localizedStrings.UIStrings.mimicStones)
+
 	if DolgubonSetCrafter.savedvars.saveLastChoice then
 		autoCraft:setState(DolgubonSetCrafter.savedvars["autoCraft"])
 		DolgubonSetCrafter.toggleCraftButton( false)
@@ -209,7 +210,7 @@ function DolgubonSetCrafter.setupBehaviourToggles()
 	end
 
 
-	autoCraft.onToggle = function(self, newState) 
+	autoCraft.onToggle = function(self, newState)
 		DolgubonSetCrafter.savedvars['autoCraft'] = newState
 		DolgubonSetCrafter.LazyCrafter:SetAllAutoCraft(newState)
 		DolgubonSetCrafter.LazyCrafter:craftInteract()
@@ -218,8 +219,8 @@ function DolgubonSetCrafter.setupBehaviourToggles()
 
 	end
 
-	mimicStones.onToggle = function(self, newState) 
-		DolgubonSetCrafter.savedvars['mimicStones'] = newState 
+	mimicStones.onToggle = function(self, newState)
+		DolgubonSetCrafter.savedvars['mimicStones'] = newState
 	end
 end
 
@@ -237,7 +238,7 @@ function DolgubonSetCrafter.initializeFunctions.setupUI()
 
 
 	DolgubonSetCrafter.setupScrollLists()
-	
+
 
 	--DolgubonSetCrafter.debugFunctions()
 	DolgubonSetCrafter.initializeWindowPosition()
@@ -248,12 +249,39 @@ function DolgubonSetCrafter.initializeFunctions.setupUI()
 	DolgubonSetCrafter.favouritesManager:RefreshData()
 	local includeFlags = { AUTO_COMPLETE_FLAG_ALL}
 	ZO_AutoComplete:New(DolgubonSetCrafterWindowRightInputBox, includeFlags, {}, AUTO_COMPLETION_ONLINE_OR_OFFLINE, 5)
+	if not DolgubonSetCrafter:GetSettings().initialFurniture then
+		DolgubonSetCrafterWindowFavourites:SetHidden(not DolgubonSetCrafter:GetSettings().showFavourites )
+	end
+	if DolgubonSetCrafter:GetSettings().initialFurniture then
+		DolgubonSetCrafter.toggleFurnitureUI(DolgubonSetCrafterWindowToggleFurniture)
+	end
 
 end
 
 
 ---------------------
 --- OTHER
+
+function DolgubonSetCrafter.isCurrentlyInFurniture()
+	return DolgubonSetCrafterWindowToggleFurniture.isCurrentUIFurniture
+end
+
+function DolgubonSetCrafter.toggleFurnitureUI(toggleButton)
+	toggleButton.isCurrentUIFurniture = not toggleButton.isCurrentUIFurniture
+	local newHidden = toggleButton.isCurrentUIFurniture
+	DolgubonSetCrafterWindowFavourites:SetHidden(newHidden)
+	DolgubonSetCrafterWindowPatternInput:SetHidden(newHidden)
+	DolgubonSetCrafterWindowComboboxes:SetHidden(newHidden)
+	DolgubonSetCrafterWindowInput:SetHidden(newHidden)
+	DolgubonSetCrafterWindowMultiplierInput:SetHidden(newHidden)
+	DolgubonSetCrafterWindowFurniture:SetHidden(not newHidden)
+	DolgubonSetCrafter:GetSettings().initialFurniture = toggleButton.isCurrentUIFurniture
+	if toggleButton.isCurrentUIFurniture then
+		out("Please select a recipe to craft")
+	else
+		out(DolgubonSetCrafter.localizedStrings.UIStrings.patternHeader)
+	end
+end
 
 function DolgubonSetCrafter.resetChoices()
 
@@ -274,14 +302,14 @@ function DolgubonSetCrafter.resetPatterns()
 end
 
 function DolgubonSetCrafter.onWindowMove(window)
-	
+
 	DolgubonSetCrafter.savedvars.xPos = window:GetLeft()
 	DolgubonSetCrafter.savedvars.yPos = window:GetTop()
 end
 DolgubonSetCrafter.defaultWidth = 1150
 DolgubonSetCrafter.defaultHeight = 650
 local totalWindowWidth = DolgubonSetCrafter.defaultWidth
-local leftHalfWindowWidth = totalWindowWidth - 250
+local leftHalfWindowWidth = totalWindowWidth - DolgubonSetCrafter.localizedMatScrollWidth
 local function getDividerPosition(window, a)
 	local DIVIDER_RATIO = leftHalfWindowWidth/totalWindowWidth
 	local width = window:GetWidth()
@@ -298,7 +326,7 @@ local function getDividerPosition(window, a)
 	divider:SetDimensions(4, window:GetHeight())
 end
 
-local a = 1 
+local a = 1
 --<DimensionConstraints minX="700" minY="460" />
 -- 700
 local function SetWindowScale(window, scale)
@@ -319,8 +347,8 @@ local function SetWindowScale(window, scale)
 	-- Change the new minimum height as required
 	DolgubonSetCrafterWindow:SetDimensionConstraints(740, 520*(1 - (1 - newScale)/2))
 
-	
-	
+
+
 
 end
 
@@ -332,7 +360,7 @@ function DolgubonSetCrafter.dynamicResize(window)
 	getDividerPosition(window, a)
 	DolgubonSetCrafter.manager:RefreshData() -- Show the scroll
 	DolgubonSetCrafter.materialManager:RefreshData()
-	
+
 	-- Resize method 2
 	local newScale = (totalWindowWidth - window:GetWidth())*(-0.0008) + 1
 	local scale = math.sqrt(window:GetWidth()/totalWindowWidth)

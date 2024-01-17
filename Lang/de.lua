@@ -4,16 +4,18 @@ DolgubonSetCrafter = DolgubonSetCrafter or {}
 
 DolgubonSetCrafter.lang = "de"
 
-DolgubonSetCrafter.localizedStrings = DolgubonSetCrafter.localizedStrings or {}
+DolgubonSetCrafter.localizedStrings = {}
 
-DolgubonSetCrafter.localizedStrings.UIStrings = DolgubonSetCrafter.localizedStrings.UIStrings or {}
+DolgubonSetCrafter.localizedStrings.UIStrings = {}
 DolgubonSetCrafter.localizedStrings.UIStrings.patternHeader       = "Wähle deine Gegenstände aus"
+DolgubonSetCrafter.localizedStrings.UIStrings.pattern				= "Piece"
 DolgubonSetCrafter.localizedStrings.UIStrings.comboboxHeader      = "Attribute" -- same
-DolgubonSetCrafter.localizedStrings.UIStrings.comboboxDefault     = "Wähle <<1>>" 
+DolgubonSetCrafter.localizedStrings.UIStrings.comboboxDefault     = "Wähle <<1>>"
 DolgubonSetCrafter.localizedStrings.UIStrings.selectPrompt        = "|cFF0000Bitte <<1>> auswählen!|r"
 DolgubonSetCrafter.localizedStrings.UIStrings.style               = "Stil"
 DolgubonSetCrafter.localizedStrings.UIStrings.level               = GetString(SI_ITEM_FORMAT_STR_LEVEL)
 DolgubonSetCrafter.localizedStrings.UIStrings.CP                  = "CP"
+DolgubonSetCrafter.localizedStrings.UIStrings.genericTrait			= "Trait"
 DolgubonSetCrafter.localizedStrings.UIStrings.armourTrait         = "|t100%:100%:EsoUI/Art/Inventory/inventory_tabIcon_armor_up.dds|tEigenschaft"
 DolgubonSetCrafter.localizedStrings.UIStrings.weaponTrait         = "|t100%:100%:DolgubonsLazySetCrafter/images/patterns/greatsword_up.dds|tEigenschaft"
 DolgubonSetCrafter.localizedStrings.UIStrings.jewelryTrait			= "Schmuck Eigenschaft"
@@ -29,15 +31,32 @@ DolgubonSetCrafter.localizedStrings.UIStrings.notEnoughSpecificMat= "Du besitzt 
 DolgubonSetCrafter.localizedStrings.UIStrings.invalidLevel        = "Ungültiges Level"
 DolgubonSetCrafter.localizedStrings.UIStrings.multiplier 			= "Anzahl"
 DolgubonSetCrafter.localizedStrings.UIStrings.autoCraft 			= "Automatische Herstellung"
-DolgubonSetCrafter.localizedStrings.UIStrings.craftStart 			= "Herstellung Beginnen"
 DolgubonSetCrafter.localizedStrings.UIStrings.mimicStones			= "Mimenstein benutzen"
+DolgubonSetCrafter.localizedStrings.UIStrings.craftStart 			= "Herstellung Beginnen"
 DolgubonSetCrafter.localizedStrings.UIStrings.materialScrollTitle 	="Materialvoraussetzungen"
 DolgubonSetCrafter.localizedStrings.UIStrings.mailRequirements 		="Voraussetzungen per Mail"
 DolgubonSetCrafter.localizedStrings.UIStrings.chatRequirements 		="In Chat einfügen"
+DolgubonSetCrafter.localizedStrings.UIStrings.chatRequest 			= "Request to Chat"
+DolgubonSetCrafter.localizedStrings.UIStrings.mailRequest 			= "Mail Request"
 DolgubonSetCrafter.localizedStrings.UIStrings.defaultUserId 		="@UserId eingeben"
+DolgubonSetCrafter.localizedStrings.UIStrings.noSet                 = "No Set"
 DolgubonSetCrafter.localizedStrings.UIStrings.usesMimicStone		= "Ihr benötigt einen Kronen-Mimenstein um diesen Gegenstand herstellen zu können"
+DolgubonSetCrafter.localizedStrings.UIStrings.qualityString         = "This item will be created with <<1>> quality"
+DolgubonSetCrafter.localizedStrings.UIStrings.armourEnchant         = "Armour Enchantment"
+DolgubonSetCrafter.localizedStrings.UIStrings.jewelryEnchant        = "Jewelry Enchantment"
+DolgubonSetCrafter.localizedStrings.UIStrings.weaponEnchant         = "Weapon Enchantment"
+DolgubonSetCrafter.localizedStrings.UIStrings.enchantQuality        = "Enchantment Quality"
+DolgubonSetCrafter.localizedStrings.UIStrings.inProgressCrafting    = "This item is in progress. You can cancel it, but some items have already been created"
+DolgubonSetCrafter.localizedStrings.UIStrings.addSelectionFavourite = "Save Selections"
+DolgubonSetCrafter.localizedStrings.UIStrings.addQueueFavourite		= "Save Queue"
+DolgubonSetCrafter.localizedStrings.UIStrings.FavouritesTitle 		= "Favourites"
+DolgubonSetCrafter.localizedStrings.UIStrings.showFavourites 		= "Show Favourites"
+DolgubonSetCrafter.localizedStrings.UIStrings.loadQueueAsIs 		= "Load with saved level"
+DolgubonSetCrafter.localizedStrings.UIStrings.loadQueueCurrentLevel	= "Load with currently selected level"
+DolgubonSetCrafter.localizedStrings.UIStrings.resetPatterns			= "Reset Patterns"
+DolgubonSetCrafter.localizedStrings.UIStrings.totalCostTitle		= "Total Cost"
 
-DolgubonSetCrafter.localizedStrings.SettingsStrings = DolgubonSetCrafter.localizedStrings.SettingsStrings or {}
+DolgubonSetCrafter.localizedStrings.SettingsStrings = {}
 
 DolgubonSetCrafter.localizedStrings.SettingsStrings.nowEditing                   = "Du änderst %s Einstellungen"
 DolgubonSetCrafter.localizedStrings.SettingsStrings.accountWide                  = "Gesamtes Konto"
@@ -54,24 +73,23 @@ DolgubonSetCrafter.localizedStrings.SettingsStrings.useCharacterSettings        
 DolgubonSetCrafter.localizedStrings.SettingsStrings.useCharacterSettingsTooltip  = "Speichert für diesen Charakter die Einstellungen spezifisch ab, nicht für das gesamte Konto."
 DolgubonSetCrafter.localizedStrings.SettingsStrings.showToggleButton              = "Umschaltknopf anzeigen"
 DolgubonSetCrafter.localizedStrings.SettingsStrings.showToggleButtonTooltip       = "Zeigt den Knopf zum Umschalten der Benutzeroberfläche des Addons immer an"
+DolgubonSetCrafter.localizedMatScrollWidth                                          = 300
 
-
-DolgubonSetCrafter.localizedStrings.weaponNames = 
+DolgubonSetCrafter.localizedStrings.weaponNames =
 {
     "Axt", "Keule", "Schwert", "Streitaxt", "Streitkolben", "Bidenhänder", "Dolch", "Bogen", "Flammenstab", "Froststab", "Blitzstab", "Heilungsstab", "Schild"
 }
-DolgubonSetCrafter.localizedStrings.jewelryNames = 
-{
-    "Ring","Ring" , "Halskette",
-}
-DolgubonSetCrafter.localizedStrings.pieceNames = 
+DolgubonSetCrafter.localizedStrings.pieceNames =
 {
     "Torso","Füße","Hände","Kopf","Beine","Schultern","Taille","Hemd"
 }
-DolgubonSetCrafter.localizedStrings.armourTypes = 
+DolgubonSetCrafter.localizedStrings.jewelryNames =
+{
+    "Ring","Ring" , "Halskette",
+}
+DolgubonSetCrafter.localizedStrings.armourTypes =
 {
     "Schwere", "Mittlere", "Leichte"
 }
-
-
 ZO_CreateStringId("SI_BINDING_NAME_SET_CRAFTER_OPEN", "Öffne/Schließe Set Crafter Fenster")
+ZO_CreateStringId("SI_BINDING_NAME_SET_CRAFTER_ADD_MAIL_ITEM", "Add item links in mail to queue")
