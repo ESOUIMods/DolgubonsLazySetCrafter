@@ -53,6 +53,7 @@ DolgubonSetCrafter.localizedStrings.UIStrings.loadQueueAsIs 		= "读取保存的
 DolgubonSetCrafter.localizedStrings.UIStrings.loadQueueCurrentLevel	= "用当前选定的等级加载"
 DolgubonSetCrafter.localizedStrings.UIStrings.resetPatterns			= "Reset Patterns"
 DolgubonSetCrafter.localizedStrings.UIStrings.totalCostTitle		= "Total Cost"
+DolgubonSetCrafter.localizedStrings.UIStrings.onlyKnownRecipes		= "Only Known Recipes"
 
 DolgubonSetCrafter.localizedStrings.SettingsStrings = {}
 
